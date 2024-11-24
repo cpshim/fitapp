@@ -1,3 +1,4 @@
+using FitApp.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -10,10 +11,14 @@ namespace FitApp.Controllers;
 [Authorize]
 public class LogoutController: ControllerBase
 {
-    [HttpPost("logout")]
-    public async Task<IActionResult> Logout(SignInManager<IdentityUser> signInManager, [FromBody] object empty)
+    [HttpPost]
+    public async Task<IActionResult> Logout(SignInManager<User> signInManager, [FromBody] object empty)
     {
-        await signInManager.SignOutAsync();
-        return Ok(new { message = "Successfully logged out" });
+        if (empty != null)
+        {
+            await signInManager.SignOutAsync();
+            return Ok(new { message = "Successfully logged out" });
+        }
+        return Unauthorized();
     }
 }

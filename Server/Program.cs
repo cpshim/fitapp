@@ -1,4 +1,5 @@
 using FitApp.Identity.Data;
+using FitApp.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -10,20 +11,33 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-builder.Services.AddDbContext<UserDbContext>(options => options.UseInMemoryDatabase("AppDb"));
 builder.Services.AddAuthorization();
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-    .AddEntityFrameworkStores<UserDbContext>();
+
+// Adds Identity Minimal API endpoints (no UI). Depends on additional middleware for cookies.
+// Limited; uses prebuilt Identity API endpoints. No custom controllers needed (API-based).
+// builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+//     .AddEntityFrameworkStores<UserDbContext>();
+
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
+    .AddIdentityCookies();
+builder.Services.AddAuthorizationBuilder();
+
+builder.Services.AddDbContext<UserDbContext>(options => options.UseInMemoryDatabase("AppDb"));
+
+builder.Services.AddIdentityCore<User>()
+    .AddEntityFrameworkStores<UserDbContext>()
+    .AddApiEndpoints();
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
+    options.Cookie.Name = "TestCookie";
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-    options.Cookie.Name = "YourAppCookieName";
     options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
     options.LoginPath = "/Identity/Account/Login";
     // ReturnUrlParameter requires 
     //using Microsoft.AspNetCore.Authentication.Cookies;
     options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
     options.SlidingExpiration = true;
 });
 
@@ -37,27 +51,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.MapIdentityApi<IdentityUser>();
-app.MapControllers();
 
-// var summaries = new[]
-// {
-//     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-// };
-//
-// app.MapGet("/weatherforecast", () =>
-//     {
-//         var forecast = Enumerable.Range(1, 5).Select(index =>
-//                 new WeatherForecast
-//                 (
-//                     DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-//                     Random.Shared.Next(-20, 55),
-//                     summaries[Random.Shared.Next(summaries.Length)]
-//                 ))
-//             .ToArray();
-//         return forecast;
-//     })
-//     .WithName("GetWeatherForecast")
-//     .WithOpenApi();
+// Used for AddIdentityApiEndpoints service when user model not extending the Identity User class
+// app.MapIdentityApi<IdentityUser>();
+
+app.MapIdentityApi<User>();
+
+app.MapControllers();
 
 app.Run();
