@@ -24,22 +24,31 @@ builder.Services.AddAuthorizationBuilder();
 
 builder.Services.AddDbContext<UserDbContext>(options => options.UseInMemoryDatabase("AppDb"));
 
+builder.Services.AddDistributedMemoryCache();
+
 builder.Services.AddIdentityCore<User>()
     .AddEntityFrameworkStores<UserDbContext>()
     .AddApiEndpoints();
 
-builder.Services.ConfigureApplicationCookie(options =>
+builder.Services.AddSession(options =>
 {
-    options.Cookie.Name = "TestCookie";
-    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-    options.Cookie.HttpOnly = true;
-    options.LoginPath = "/Identity/Account/Login";
-    // ReturnUrlParameter requires 
-    //using Microsoft.AspNetCore.Authentication.Cookies;
-    options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
-    options.SlidingExpiration = true;
+    options.Cookie.Name = ".FitApp.Session";
+    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    options.Cookie.IsEssential = true;
 });
+
+// builder.Services.ConfigureApplicationCookie(options =>
+// {
+//     options.Cookie.Name = "TestCookie";
+//     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+//     options.Cookie.HttpOnly = true;
+//     options.LoginPath = "/Identity/Account/Login";
+//     // ReturnUrlParameter requires 
+//     //using Microsoft.AspNetCore.Authentication.Cookies;
+//     options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+//     options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+//     options.SlidingExpiration = true;
+// });
 
 var app = builder.Build();
 
@@ -51,6 +60,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseSession();
+app.UseAuthorization();
 
 // Used for AddIdentityApiEndpoints service when user model not extending the Identity User class
 // app.MapIdentityApi<IdentityUser>();
