@@ -12,7 +12,8 @@ import type { LoginSchema } from "@/lib/schema";
 export const authQueryOptions = () => {
   return queryOptions({
     queryKey: ["auth"],
-    queryFn: () => ky.get("auth").json<SafeUser>(),
+    queryFn: () => ky.get("weatherforecast").json<SafeUser>(),
+    // queryFn: () => ky.get("auth").json<SafeUser>(),
   });
 };
 

@@ -12,12 +12,18 @@ namespace FitApp.Controllers;
 public class AuthController: ControllerBase
 {
     [HttpPost("logout")]
-    public async Task<IActionResult> Logout(SignInManager<User> signInManager, [FromBody] object empty)
+    public async Task<IActionResult> Logout(SignInManager<User> signInManager, [FromBody] object? empty)
     {
-        if (empty != null)
+        bool isAuthenticated = false;
+        if (User.Identity != null)
+        {
+            isAuthenticated = User.Identity.IsAuthenticated;
+        }
+        if (isAuthenticated)
         {
             await signInManager.SignOutAsync();
-            // HttpContext.Session.Clear();
+            HttpContext.Session.Clear();
+            Response.Cookies.Delete(".FitApp.Session");
             return Ok(new { message = "Successfully logged out" });
         }
         return Unauthorized();
@@ -43,7 +49,13 @@ public class AuthController: ControllerBase
                  // You may need to issue a cookie manually here
                  // await signInManager.SignInAsync(user, isPersistent: false);
 
-                 return Ok(new { message = "Login successful" });
+                 return Ok(new
+                 {
+                     message = "Login successful",
+                     firstName = "Bobby",
+                     lastName = "Jones",
+                     email = "bobby@gmail.com"
+                 });
              }
          }
 

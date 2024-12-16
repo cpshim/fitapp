@@ -5,6 +5,22 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+// var connectionString = builder.Configuration.GetConnectionString("UserDbConnectionString") 
+//                        ?? throw new InvalidOperationException("Connection string 'UserDbConnectionString' not found.");
+
+//set up local secrets using command dotnet user-secrets init
+//set up key ConnectionStrings:PostgresDbConnectionString with connection URL
+var connectionString = builder.Configuration["ConnectionStrings:PostgresDbConnectionString"];
+Console.WriteLine(connectionString);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AllowVite", policy =>
+        policy.WithOrigins("http://localhost:5173") // Vite's dev server URL
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials());
+});
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -12,6 +28,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddAuthorization();
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 // Adds Identity Minimal API endpoints (no UI). Depends on additional middleware for cookies.
 // Limited; uses prebuilt Identity API endpoints. No custom controllers needed (API-based).
@@ -22,7 +39,9 @@ builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
     .AddIdentityCookies();
 builder.Services.AddAuthorizationBuilder();
 
-builder.Services.AddDbContext<UserDbContext>(options => options.UseInMemoryDatabase("AppDb"));
+// builder.Services.AddDbContext<UserDbContext>(options => options.UseInMemoryDatabase("AppDb"));
+builder.Services.AddDbContext<UserDbContext>(options => 
+    options.UseNpgsql(connectionString));
 
 builder.Services.AddDistributedMemoryCache();
 
@@ -60,6 +79,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowVite");
 
 app.UseAuthentication();
 app.UseSession();
