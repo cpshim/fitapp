@@ -96,7 +96,7 @@ FitApp is a simple and intuitive web application that allows users to easily tra
 
 ### Built With
 
-* [![NET][ASP.NET]][NET-url]
+* [![NET][ASP.NET Core]][NET-url]
 * [![Postgres][PostgreSQL]][Postgres-url]
 * [![React][React.js]][React-url]
 * [![Docker][Docker]][Docker-url]
@@ -180,6 +180,8 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [ ] Progress Tracking: Log workouts with information including exercises, sets, reps, and weights.
     - [ ] Endpoints: Setup endpoints for CRUD actions on workout information
     - [ ] UI Page: Setup exercise page in UI
+- [ ] Goal Setting: Set custom strength goals and track the progress towards achieving them.
+- [ ] Workout History: Review completed workout history with filtering and search options.
 
 <!-- See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues). -->
 
