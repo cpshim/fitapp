@@ -176,8 +176,10 @@ _For more examples, please refer to the [Documentation](https://example.com)_
     - [x] Authentication: Setup cookie-based authentication
     - [x] Endpoints: Setup login, logout, and register endpoints
     - [x] Database: Setup PostgreSQL connection and create tables
+    - [x] UI Page: Setup login and logout pages in the UI
 - [ ] Progress Tracking: Log workouts with information including exercises, sets, reps, and weights.
     - [ ] Endpoints: Setup endpoints for CRUD actions on workout information
+    - [ ] UI Page: Setup exercise page in UI
 
 <!-- See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues). -->
 
