@@ -71,7 +71,7 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <!-- <li><a href="#usage">Usage</a></li> -->
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#lessons-learned">Lessons Learned</a></li>
     <!-- <li><a href="#contributing">Contributing</a></li>
@@ -88,7 +88,7 @@
 
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
 
-An web application that allows users to easily track weightlifting progress and goals. Built to learn more about C# and ASP.NET Core, along with putting together a scalable web application.
+FitApp is a simple and intuitive web application that allows users to easily track their weightlifting progress, set goals, and monitor personal records over time. We created it to help us stay organized and on track for our fitness goals, while learning more about C# and ASP.NET Core.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -115,18 +115,23 @@ An web application that allows users to easily track weightlifting progress and 
 
 <!-- GETTING STARTED -->
 ## Getting Started
-<!--
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+This is a list things you need to install beforehand.
+* Node.js
+* C#
+* ASP.NET Core
+* PostgreSQL
+
+<!--
 * npm
   ```sh
   npm install npm@latest -g
   ```
-
+<!--
 ### Installation
 
 1. Get a free API Key at [https://example.com](https://example.com)
@@ -153,6 +158,7 @@ This is an example of how to list things you need to use the software and how to
 
 
 <!-- USAGE EXAMPLES -->
+<!--
 ## Usage
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
@@ -160,16 +166,18 @@ Use this space to show useful examples of how a project can be used. Additional 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
+-->
 
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [x] User Accounts: Login system to save data for individual users.
+    - [x] Authentication: Setup cookie-based authentication
+    - [x] Endpoints: Setup login, logout, and register endpoints
+    - [x] Database: Setup PostgreSQL connection and create tables
+- [ ] Progress Tracking: Log workouts with information including exercises, sets, reps, and weights.
+    - [ ] Endpoints: Setup endpoints for CRUD actions on workout information
 
 <!-- See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues). -->
 
