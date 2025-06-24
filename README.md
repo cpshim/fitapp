@@ -96,7 +96,7 @@ FitApp is a simple and intuitive web application that allows users to easily tra
 
 ### Built With
 
-* [![NET][ASP.NET Core]][NET-url]
+* [![NET][ASP.NET]][NET-url]
 * [![Postgres][PostgreSQL]][Postgres-url]
 * [![React][React.js]][React-url]
 * [![Docker][Docker]][Docker-url]
@@ -265,7 +265,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
 [product-screenshot]: images/screenshot.png
-[ASP.NET]: https://img.shields.io/badge/ASP.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white
+[ASP.NET]: https://img.shields.io/badge/ASP.NET%20Core-512BD4?style=for-the-badge&logo=dotnet&logoColor=white
 [Net-url]: https://dotnet.microsoft.com/en-us/apps/aspnet
 [PostgreSQL]: https://img.shields.io/badge/postgresql-336791?style=for-the-badge&logo=postgresql&logoColor=white
 [Postgres-url]: https://www.postgresql.org
